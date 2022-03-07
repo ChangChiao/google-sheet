@@ -30,13 +30,11 @@ function App() {
   };
 
   const combineStr = (obj: sendParam) => {
-    const { name, phone, date, people, child, vegetarian, smoke } = obj;
     let strArr = [];
     for (const [key, value] of Object.entries(obj)) {
-      console.log("key, value", key, value);
       strArr.push(`${key}=${value}`);
     }
-    console.log(`str`, strArr.join("&"));
+    // console.log(`str`, strArr.join("&"));
     return strArr.join("&");
   };
   const handForm = (event: React.SyntheticEvent) => {
@@ -61,40 +59,96 @@ function App() {
   };
 
   return (
-    <div className="m-auto w-[500px] bg-gray-400 text-center">
+    <div className="m-auto w-[500px] py-2 text-primary-500">
+      <h1 className="text-center text-[32px] font-bold">六角西餐廳</h1>
       <form id="form" onSubmit={handForm} className="p-2">
-        <div className="flex">
-          <div>
-            <label htmlFor="name">姓名</label>
-            <input id="name" name="name" required type="text" />
+        <div className="block md:flex">
+          <div className="w-full pb-2">
+            <label className="block " htmlFor="name">
+              姓名
+            </label>
+            <input
+              className="w-full"
+              id="name"
+              name="name"
+              required
+              type="text"
+            />
           </div>
-          <div>
-            <label htmlFor="phone">電話</label>
-            <input id="phone" name="phone" required type="number" />
+          <div className="w-full pb-2">
+            <label className="block " htmlFor="phone">
+              電話
+            </label>
+            <input
+              className="w-full"
+              id="phone"
+              name="phone"
+              required
+              type="number"
+            />
           </div>
         </div>
-        <div>
-          <input className="w-full" name="date" required type="date" />
+        <div className="pb-2">
+          <label className="block " htmlFor="date">
+            日期
+          </label>
+          <input
+            className="w-full"
+            id="date"
+            name="date"
+            required
+            type="date"
+          />
         </div>
-        <div>
-          人數
-          <select name="people" id="" required>
+        <div className="pb-2">
+          <label className="block " htmlFor="people">
+            人數
+          </label>
+          <select className="w-full" name="people" id="people" required>
             <option value="">請選擇人數</option>
             {Array.from({ length: 10 }).map((k, i) => {
               return <option value={i + 1}>{i + 1}</option>;
             })}
           </select>
         </div>
-        <div>
-          <p>其他項目</p>
-          <label htmlFor="child">需要兒童座椅</label>
-          <input type="checkbox" id="child" name="child" value="1" />
-          <label htmlFor="vegetarian">素食餐點</label>
-          <input type="checkbox" id="vegetarian" name="vegetarian" value="1" />
-          <label htmlFor="smoke">吸菸區</label>
-          <input type="checkbox" id="smoke" name="smoke" value="1" />
+        <div className="pb-2">
+          <p className="">其他項目</p>
+          <ul>
+            <li className="flex items-center">
+              <input
+                className=""
+                type="checkbox"
+                id="child"
+                name="child"
+                value="1"
+              />
+              <label className="pl-2" htmlFor="child">
+                需要兒童座椅
+              </label>
+            </li>
+            <li className="flex items-center">
+              <input
+                type="checkbox"
+                id="vegetarian"
+                name="vegetarian"
+                value="1"
+              />
+              <label className="pl-2" htmlFor="vegetarian">
+                素食餐點
+              </label>
+            </li>
+            <li className="flex items-center">
+              <input type="checkbox" id="smoke" name="smoke" value="1" />
+              <label className="pl-2" htmlFor="smoke">
+                吸菸區
+              </label>
+            </li>
+          </ul>
         </div>
-        <button type="submit" className="w-full bg-gray-900 text-white">
+        <button
+          type="submit"
+          className="h-[38px] w-full bg-gray-900 text-white"
+        >
           送出
         </button>
       </form>

@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  input {
+    outline: none;
+    @apply border bg-transparent text-primary-100 text-gray-900;
+  }
+  select {
+    @apply border py-1 text-primary-100;
+  }
+}
