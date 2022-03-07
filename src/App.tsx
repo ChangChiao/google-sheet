@@ -1,64 +1,64 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import poweredBy from "./powered-by-vitawind-dark.png";
 
 function App() {
   const [count, setCount] = useState(0);
+  const getGoogleForm = async () => {};
+  const handForm = (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    const target = event.target;
+    const formData = document.querySelector("#form") as HTMLFormElement;
 
+    const form = Object.fromEntries(new FormData(formData).entries());
+    const { name, phone, date } = form;
+    const obj = {
+      name,
+      phone,
+      date,
+    };
+    console.log("form", obj);
+  };
+  useEffect(() => {
+    getGoogleForm();
+  });
   return (
-    <div className="text-center selection:bg-green-900">
-      <header className="flex min-h-screen flex-col items-center justify-center bg-[#282c34] text-white">
-        <img
-          src={logo}
-          className="animate-speed h-60 motion-safe:animate-spin"
-          alt="logo"
-        />
-        <style>
-          {
-            "\
-            .animate-speed{\
-              animation-duration:20s;\
-            }\
-          "
-          }
-        </style>
-        <p className="bg-gradient-to-r from-emerald-300 to-sky-300 bg-clip-text text-5xl font-black text-transparent selection:bg-transparent">
-          Vite + React + Typescript + Tailwindcss v3
-        </p>
-        <p className="mt-3">
-          <button
-            type="button"
-            className="my-6 rounded bg-gray-300 px-2 py-2 text-[#282C34] transition-all hover:bg-gray-200"
-            onClick={() => setCount((count) => count + 1)}
-          >
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code className="text-[#8d96a7]">App.tsx</code> and save to test
-          HMR updates.
-        </p>
-        <p className="mt-3 flex gap-3 text-center text-[#8d96a7]">
-          <a
-            className="text-[#61dafb] transition-all hover:text-blue-400"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {" | "}
-          <a
-            className="text-[#61dafb] transition-all hover:text-blue-400"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-        <img src={poweredBy} className="mx-auto my-8" alt="powered-by" />
-      </header>
+    <div className="m-auto w-[500px] bg-gray-400 text-center">
+      <form id="form" onSubmit={handForm} className="p-2">
+        <div className="flex">
+          <div>
+            <label htmlFor="name">姓名</label>
+            <input id="name" name="name" type="text" />
+          </div>
+          <div>
+            <label htmlFor="phone">電話</label>
+            <input id="phone" name="phone" type="number" />
+          </div>
+        </div>
+        <div>
+          <input className="w-full" name="date" type="date" />
+        </div>
+        <div>
+          人數
+          <select name="people" id="">
+            {Array.from({ length: 10 }).map((k, i) => {
+              return <option>{i + 1}</option>;
+            })}
+          </select>
+        </div>
+        <div>
+          <p>其他項目</p>
+          <label htmlFor="child">需要兒童座椅</label>
+          <input type="checkbox" id="child" />
+          <label htmlFor="vegetarian">素食餐點</label>
+          <input type="checkbox" id="vegetarian" />
+          <label htmlFor="smoke">吸菸區</label>
+          <input type="checkbox" id="smoke" />
+        </div>
+        <button type="submit" className="w-full bg-gray-900 text-white">
+          送出
+        </button>
+      </form>
     </div>
   );
 }
