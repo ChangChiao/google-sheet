@@ -6,9 +6,15 @@ function App() {
   const sendFormData = async (form: sendParam) => {
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbwJrU0MmuJChHNy3U0wMzsXaU0j7ZhOZmikZQTqQ5v2paMR1YkF-Nv3pgBO56bcSyVGtQ/exec?" +
-          combineStr(form),
-        { mode: "no-cors" }
+        "https://script.google.com/macros/s/AKfycbyBrrtAe44anJZ5NmmQ7lwRC42veFd8dH4UMKd6Vr2Er3iq6bLSgV8BJWIQ2fFCyJb8Gw/exec",
+        {
+          mode: "no-cors",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+          },
+          body: setFormBody(form),
+        }
       )
         .then((res) => res.json())
         .catch((error) => console.log("error", error));
@@ -24,19 +30,30 @@ function App() {
     phone: string;
     date: string;
     people: string;
-    child: string | undefined;
-    vegetarian: string | undefined;
-    smoke: string | undefined;
+    child?: string | undefined;
+    vegetarian?: string | undefined;
+    smoke?: string | undefined;
   };
 
-  const combineStr = (obj: sendParam) => {
-    let strArr = [];
+  const setFormBody = (obj: sendParam) => {
+    let formBody = [];
     for (const [key, value] of Object.entries(obj)) {
-      strArr.push(`${key}=${value}`);
+      //     strArr.push(`${key}=${value}`);
+      const encodedKey = encodeURIComponent(key);
+      const encodedValue = encodeURIComponent(value);
+      if (encodedValue) formBody.push(encodedKey + "=" + encodedValue);
     }
-    // console.log(`str`, strArr.join("&"));
-    return strArr.join("&");
+    return formBody.join("&");
   };
+
+  // const combineStr = (obj: sendParam) => {
+  //   let strArr = [];
+  //   for (const [key, value] of Object.entries(obj)) {
+  //     strArr.push(`${key}=${value}`);
+  //   }
+  //   // console.log(`str`, strArr.join("&"));
+  //   return strArr.join("&");
+  // };
   const handForm = (event: React.SyntheticEvent) => {
     event.preventDefault();
     const formData = document.querySelector("#form") as HTMLFormElement;
@@ -59,12 +76,12 @@ function App() {
   };
 
   return (
-    <div className="m-auto w-[500px] py-2 text-primary-500">
+    <div className="m-auto w-[100%] py-2 text-primary-500 sm:max-w-[834px]">
       <h1 className="text-center text-[32px] font-bold">六角西餐廳</h1>
       <form id="form" onSubmit={handForm} className="p-2">
-        <div className="block md:flex">
+        <div className="block sm:flex">
           <div className="w-full pb-2">
-            <label className="block " htmlFor="name">
+            <label className="block py-2" htmlFor="name">
               姓名
             </label>
             <input
@@ -75,8 +92,8 @@ function App() {
               type="text"
             />
           </div>
-          <div className="w-full pb-2">
-            <label className="block " htmlFor="phone">
+          <div className="w-full pb-2 sm:pl-2">
+            <label className="block py-2" htmlFor="phone">
               電話
             </label>
             <input
@@ -84,12 +101,12 @@ function App() {
               id="phone"
               name="phone"
               required
-              type="number"
+              type="tel"
             />
           </div>
         </div>
         <div className="pb-2">
-          <label className="block " htmlFor="date">
+          <label className="block py-2" htmlFor="date">
             日期
           </label>
           <input
@@ -101,19 +118,28 @@ function App() {
           />
         </div>
         <div className="pb-2">
-          <label className="block " htmlFor="people">
+          <label className="block py-2" htmlFor="people">
             人數
           </label>
-          <select className="w-full" name="people" id="people" required>
+          <select
+            className="w-full text-gray-800"
+            name="people"
+            id="people"
+            required
+          >
             <option value="">請選擇人數</option>
             {Array.from({ length: 10 }).map((k, i) => {
-              return <option value={i + 1}>{i + 1}</option>;
+              return (
+                <option key={i} value={i + 1}>
+                  {i + 1}
+                </option>
+              );
             })}
           </select>
         </div>
         <div className="pb-2">
-          <p className="">其他項目</p>
-          <ul>
+          <p className="py-2">其他項目</p>
+          <ul className="pb-6">
             <li className="flex items-center">
               <input
                 className=""
