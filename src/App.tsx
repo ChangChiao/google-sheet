@@ -78,7 +78,13 @@ function App() {
   return (
     <div className="m-auto w-[100%] py-2 text-primary-500 sm:max-w-[834px]">
       <h1 className="text-center text-[32px] font-bold">六角西餐廳</h1>
-      <form id="form" onSubmit={handForm} className="p-2">
+      <form
+        action="https://script.google.com/macros/s/AKfycbwX-LDg7DnJZE5co9vviqH4mrCF2oqthsv36PpT6IWoBWMkrqdXNzyAbAnqveEtfYav2A/exec"
+        id="form"
+        target="_blank"
+        method="post"
+        className="p-2"
+      >
         <div className="block sm:flex">
           <div className="w-full pb-2">
             <label className="block py-2" htmlFor="name">
